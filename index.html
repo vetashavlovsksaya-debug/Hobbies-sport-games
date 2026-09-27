@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matura Trainer · Unit 4 · Hobbies, Sport & Games</title>
+<style>
+:root{
+ --bg:#f6f8fb;--card:#fff;--text:#14263f;--muted:#66758a;--line:#d8e2ec;
+ --accent:#246ba0;--soft:#eaf4fb;--good:#24684f;--goodbg:#eaf7f1;
+ --bad:#8c4141;--badbg:#fff0f0;--warn:#765816;--warnbg:#fff7df;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input{font:inherit}
+.wrap{max-width:980px;margin:auto;padding:22px}
+.hero,.card,.results{background:#fff;border:1px solid var(--line);border-radius:19px;padding:22px}
+.hero{margin-bottom:14px}
+.eyebrow{font-size:13px;letter-spacing:.13em;text-transform:uppercase;font-weight:900;color:var(--accent)}
+h1{font-size:34px;margin:6px 0 5px}
+.subtitle{color:var(--muted);line-height:1.45}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.tab{border:1px solid var(--line);background:#fff;border-radius:13px;padding:14px;font-weight:850;cursor:pointer}
+.tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.info{background:var(--soft);border:1px solid var(--line);border-radius:13px;padding:12px 14px;color:#3c566c;margin-bottom:12px}
+.progress{height:9px;background:#e7edf3;border-radius:999px;overflow:hidden}
+.progress>div{height:100%;background:var(--accent);width:0}
+.progress-text{text-align:right;color:var(--muted);font-size:13px;margin:6px 0 13px}
+.card{margin-bottom:14px}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.badge{background:var(--soft);color:var(--accent);padding:7px 10px;border-radius:999px;font-size:13px;font-weight:850}
+.point{color:var(--muted);font-size:13px}
+.question{font-size:18px;line-height:1.55;margin:16px 0}
+.options{display:grid;gap:9px}
+.option{display:flex;gap:10px;padding:12px;border:1px solid var(--line);border-radius:12px;cursor:pointer;background:#fff}
+.option:has(input:checked){background:var(--soft);border-color:var(--accent)}
+.option input{accent-color:var(--accent);margin-top:3px}
+.answer{width:100%;padding:13px;border:1px solid var(--line);border-radius:11px;font-size:16px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.btn{padding:11px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--text);font-weight:800;cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.hidden{display:none!important}
+.hint,.feedback{margin-top:13px;padding:14px;border-radius:12px;line-height:1.5}
+.hint{background:var(--warnbg);color:var(--warn)}
+.feedback.good{background:var(--goodbg);color:var(--good)}
+.feedback.bad{background:var(--badbg);color:var(--bad)}
+.detail{margin-top:11px;padding-top:11px;border-top:1px solid rgba(0,0,0,.08)}
+.detail-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:9px}
+.mini{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px}
+.mini b{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;margin-bottom:4px}
+.score{font-size:50px;font-weight:950;color:var(--accent);margin:6px 0}
+.review{border:1px solid var(--line);border-radius:11px;padding:12px;margin-top:8px}
+.footer{text-align:center;color:var(--muted);font-size:13px;margin-top:16px}
+@media(max-width:680px){
+ .wrap{padding:12px} h1{font-size:28px} .tabs{grid-template-columns:1fr}
+ .detail-grid{grid-template-columns:1fr} .actions .btn{width:100%}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section class="hero">
+  <div class="eyebrow">Matura Trainer</div>
+  <h1>Unit 4 · Hobbies, Sport & Games</h1>
+  <div class="subtitle">Vocabulary · phrasal verbs · collocations · word patterns · word formation · transformations</div>
+</section>
+
+<div class="tabs">
+  <button id="practiceTab" class="tab active" type="button">Practice Mode · 30 tasks</button>
+  <button id="examTab" class="tab" type="button">Exam Mode · 12 tasks</button>
+</div>
+
+<div id="modeInfo" class="info"></div>
+<div class="progress"><div id="bar"></div></div>
+<div id="progressText" class="progress-text"></div>
+<section id="quiz"></section>
+</main>
+
+<script>
+(() => {
+const PRACTICE=[{"type": "mc", "q": "The runners completed two laps of the athletics ______ before stopping for a break.", "options": ["court", "track", "pitch", "course"], "answer": 1, "hint": "Think of the oval surface used for running races.", "why": "An athletics track is the prepared surface used for running events.", "focus": "Meaning", "compare": "court = tennis/basketball; pitch = football/rugby; course = golf or a route.", "trap": "All four words can describe places used for sport, so the surrounding sport decides the answer."}, {"type": "mc", "q": "Our team managed to ______ the defending champions by a single point.", "options": ["win", "beat", "score", "draw"], "answer": 1, "hint": "The object is the opposing team.", "why": "We beat an opponent or team, but we win a match, race, competition or prize.", "focus": "Collocation", "compare": "beat a team · win a match · score a goal/point.", "trap": "Win cannot normally take the opponent as its direct object."}, {"type": "mc", "q": "Neither player could gain an advantage, so the match ended in a ______.", "options": ["draw", "score", "final", "result"], "answer": 0, "hint": "Both sides finished with the same score.", "why": "A draw is a game or match in which neither side wins.", "focus": "Meaning", "compare": "draw = equal result; score = number of points/goals.", "trap": "Do not confuse the verb draw with the noun a draw."}, {"type": "mc", "q": "The golf ______ is famous for its narrow fairways and difficult final hole.", "options": ["pitch", "court", "course", "track"], "answer": 2, "hint": "Which sports venue contains holes?", "why": "Golf is played on a course.", "focus": "Meaning", "compare": "golf course · football pitch · tennis court · running track.", "trap": "Learn sports venues as fixed combinations."}, {"type": "mc", "q": "The ______ blew the whistle and awarded a penalty.", "options": ["spectator", "referee", "opponent", "competitor"], "answer": 1, "hint": "This person controls the match and applies the rules.", "why": "A referee is the official who makes decisions during a sports match.", "focus": "Meaning", "compare": "spectator watches; opponent competes against you; competitor takes part.", "trap": "Do not choose a word merely because it refers to a person at a sports event."}, {"type": "mc", "q": "Only eight ______ reached the final after two demanding qualifying rounds.", "options": ["viewers", "competitors", "referees", "audiences"], "answer": 1, "hint": "These people are taking part in the competition.", "why": "Competitors are people who take part in a competition.", "focus": "Meaning", "compare": "spectators/viewers watch; competitors participate.", "trap": "Viewer is especially natural for television or online content, not participants."}, {"type": "mc", "q": "The striker ______ twice in the final ten minutes and completely changed the game.", "options": ["won", "beat", "scored", "drew"], "answer": 2, "hint": "What does a player do when they get goals or points?", "why": "Players score goals or points.", "focus": "Collocation", "compare": "score a goal · win a game · beat an opponent.", "trap": "Score can be used without an object when the meaning is clear."}, {"type": "mc", "q": "Thousands of television ______ watched the championship from around the world.", "options": ["spectators", "viewers", "players", "supporters"], "answer": 1, "hint": "They are watching on television.", "why": "Viewers watch television or online video. Spectators are physically present at an event.", "focus": "Lexical precision", "compare": "viewer = screen; spectator = live event.", "trap": "Both words mean 'people watching', but the medium matters."}, {"type": "input", "q": "I didn't enjoy yoga at first, but I decided to __________ with it for another month.", "answers": ["carry on"], "display": "carry on", "hint": "You need a phrasal verb meaning 'continue'.", "why": "Carry on means continue doing something.", "focus": "Phrasal verb", "compare": "carry on with an activity / carry on doing something.", "trap": "Do not confuse carry on with carry out (= perform a task/research)."}, {"type": "input", "q": "Ella had to __________ of the cycling event when she injured her knee.", "answers": ["pull out"], "display": "pull out", "hint": "She stopped taking part before the event was completed.", "why": "Pull out of something means stop being involved or withdraw.", "focus": "Phrasal verb", "compare": "pull out of a race/team/project.", "trap": "The preposition of is normally needed when the object follows."}, {"type": "input", "q": "After years of saying he wanted a creative hobby, Leo finally __________ pottery.", "answers": ["took up"], "display": "took up", "hint": "He started a new hobby.", "why": "Take up means begin a hobby or activity.", "focus": "Phrasal verb", "compare": "take up chess / photography / running.", "trap": "Take part means participate, not start a hobby."}, {"type": "input", "q": "The semi-final was __________ until Monday because of strong winds.", "answers": ["put off"], "display": "put off", "hint": "The event was postponed.", "why": "Put off means postpone.", "focus": "Phrasal verb", "compare": "put off a match / meeting / decision.", "trap": "Put off can also mean discourage, but context determines the meaning."}, {"type": "input", "q": "I haven't __________ booking those swimming lessons yet.", "answers": ["got round to", "gotten round to"], "display": "got round to", "hint": "The structure means 'finally find time to do something'.", "why": "Get round to + noun/-ing means eventually find time to do something.", "focus": "Word pattern", "compare": "get round to doing, not get round to do.", "trap": "Here to is a preposition, so it is followed by -ing."}, {"type": "input", "q": "We were only watching at first, but then someone invited us to __________.", "answers": ["join in"], "display": "join in", "hint": "You begin participating in an activity already happening.", "why": "Join in means take part in an activity with other people.", "focus": "Phrasal verb", "compare": "join a club/team; join in a game/activity.", "trap": "Join normally takes a direct object; join in refers to participating."}, {"type": "input", "q": "Marta is brilliant __________ chess but hopeless at most ball games.", "answers": ["at"], "display": "at", "hint": "Which preposition follows good/brilliant?", "why": "We say good/brilliant/bad at an activity.", "focus": "Preposition", "compare": "good at tennis · interested in tennis · fond of tennis.", "trap": "Sport vocabulary often depends on fixed prepositions."}, {"type": "input", "q": "He has a real talent __________ explaining complicated rules clearly.", "answers": ["for"], "display": "for", "hint": "Talent ___ something / doing something.", "why": "The standard pattern is have a talent for + noun/-ing.", "focus": "Word pattern", "compare": "talent for doing · ability to do.", "trap": "Do not transfer the preposition from another language."}, {"type": "input", "q": "Both teams are competing __________ a place in the final.", "answers": ["for"], "display": "for", "hint": "They want to obtain something.", "why": "Compete for means try to win or obtain something.", "focus": "Preposition", "compare": "compete for a prize; compete against/with another person.", "trap": "The preposition changes with meaning."}, {"type": "input", "q": "My brother is completely mad __________ basketball and watches every major game.", "answers": ["about"], "display": "about", "hint": "Fixed expression meaning 'very enthusiastic about'.", "why": "Be mad about something means like it very much.", "focus": "Collocation", "compare": "mad about sport ≠ mad at somebody (= angry).", "trap": "About and at create different meanings."}, {"type": "input", "q": "The organisers prevented several fans __________ entering the pitch.", "answers": ["from"], "display": "from", "hint": "Prevent somebody ___ doing.", "why": "The pattern is prevent somebody from doing something.", "focus": "Word pattern", "compare": "stop somebody from doing has the same pattern.", "trap": "Do not use prevent somebody to do."}, {"type": "input", "q": "Take your __________ — accuracy matters more than speed in this exercise.", "answers": ["time"], "display": "time", "hint": "Fixed phrase meaning 'do not hurry'.", "why": "Take your time means do something without rushing.", "focus": "Collocation", "compare": "take your time · spend time doing · make time for.", "trap": "This is a fixed expression; do not replace time with chance."}, {"type": "input", "q": "The new sports centre has excellent training __________. (EQUIP)", "answers": ["equipment"], "display": "equipment", "hint": "You need an uncountable noun.", "why": "Equip → equipment. Equipment is normally uncountable.", "focus": "Word formation", "compare": "a piece of equipment, not an equipment.", "trap": "Do not add plural -s to equipment in standard usage."}, {"type": "input", "q": "Her unexpected __________ in the first round disappointed the whole team. (LOSE)", "answers": ["loss"], "display": "loss", "hint": "You need a noun meaning the fact of losing.", "why": "Lose (verb) → loss (noun).", "focus": "Word formation", "compare": "lose a game · suffer a loss.", "trap": "Loss is irregular; it is not 'losing' in this noun pattern."}, {"type": "input", "q": "The club is looking for a highly __________ coach with international experience. (COMPETE)", "answers": ["competitive"], "display": "competitive", "hint": "You need an adjective.", "why": "Compete → competitive.", "focus": "Word formation", "compare": "competitor = person; competition = event; competitive = adjective.", "trap": "Choose the word class from the sentence structure before changing the base word."}, {"type": "input", "q": "The climbing wall is temporarily closed for routine __________. (MAINTAIN)", "answers": ["maintenance"], "display": "maintenance", "hint": "You need a noun after 'routine'.", "why": "Maintain → maintenance.", "focus": "Word formation", "compare": "maintain equipment · routine maintenance.", "trap": "Watch the spelling change: maintain → maintenance."}, {"type": "input", "q": "The final was extremely __________, with both players producing their best tennis. (COMPETE)", "answers": ["competitive"], "display": "competitive", "hint": "The sentence needs an adjective describing the match.", "why": "Competitive can describe a contest in which people are strongly trying to win.", "focus": "Word formation", "compare": "competitive match / competitive person.", "trap": "Competitor is a person, not an adjective."}, {"type": "input", "q": "The young athlete's lack of experience was clear, but so was her __________ to improve. (DETERMINE)", "answers": ["determination"], "display": "determination", "hint": "A noun is needed after 'her'.", "why": "Determine → determination.", "focus": "Word formation", "compare": "determined = adjective; determination = noun.", "trap": "Use grammar around the gap to identify the required word class."}, {"type": "input", "q": "I finally found time to start learning the drums. ROUND → I finally __________ learning the drums.", "answers": ["got round to"], "display": "got round to", "hint": "Use the fixed phrasal verb + -ing pattern.", "why": "Get round to + -ing means finally find time to do something.", "focus": "Transformation", "compare": "get round to doing.", "trap": "The key word must remain unchanged."}, {"type": "input", "q": "The storm made the organisers cancel the outdoor competition. CALLED → The outdoor competition __________ because of the storm.", "answers": ["was called off"], "display": "was called off", "hint": "Use a phrasal verb meaning cancel.", "why": "Call off means cancel; the passive is was called off.", "focus": "Transformation", "compare": "put off = postpone; call off = cancel.", "trap": "Postpone and cancel are not the same."}, {"type": "input", "q": "I don't really like watching motor racing. FOND → I __________ watching motor racing.", "answers": ["am not fond of", "'m not fond of"], "display": "am not fond of", "hint": "Fond is followed by a preposition.", "why": "Be fond of + noun/-ing means like.", "focus": "Transformation", "compare": "fond of doing · interested in doing.", "trap": "Do not write fond to."}, {"type": "input", "q": "Translate: I really want to (spróbować swoich sił w łucznictwie) __________ this summer.", "answers": ["have a go at archery", "try my hand at archery"], "display": "have a go at archery / try my hand at archery", "hint": "Use an expression meaning 'try an activity'.", "why": "Have a go at and try your hand at both mean attempt an activity, often for the first time.", "focus": "Translation", "compare": "have a go at something · try your hand at something.", "trap": "Natural exam English often rewards a fixed phrase rather than a literal translation."}];
+const EXAM=[{"type": "mc", "q": "The basketball team trained on an outdoor ______ while the sports hall was being repaired.", "options": ["course", "court", "track", "ring"], "answer": 1, "correct": "court"}, {"type": "mc", "q": "Our school team ______ the regional champions 3–1 in yesterday's final.", "options": ["won", "beat", "scored", "drew"], "answer": 1, "correct": "beat"}, {"type": "mc", "q": "Several ______ had already crossed the finish line when the rain became heavier.", "options": ["viewers", "competitors", "referees", "audiences"], "answer": 1, "correct": "competitors"}, {"type": "input", "q": "The organisers decided to __________ the tournament after the venue lost power.", "answers": ["call off"], "correct": "call off"}, {"type": "input", "q": "I've been meaning to start fencing, but I haven't __________ it yet.", "answers": ["got round to"], "correct": "got round to"}, {"type": "input", "q": "Nina is very keen __________ joining the university volleyball team.", "answers": ["on"], "correct": "on"}, {"type": "input", "q": "The coach stopped Sam __________ returning to the field after the injury.", "answers": ["from"], "correct": "from"}, {"type": "input", "q": "The club replaced all its old training __________ last month. (EQUIP)", "answers": ["equipment"], "correct": "equipment"}, {"type": "input", "q": "Despite being an __________, Leo finished ahead of several experienced players. (AMATEUR)", "answers": ["amateur"], "correct": "amateur"}, {"type": "input", "q": "Mia no longer enjoys competitive swimming. OFF → Mia has __________ competitive swimming.", "answers": ["gone off"], "correct": "gone off"}, {"type": "input", "q": "The ankle injury made it impossible for Jo to take part in the race. PREVENTED → The ankle injury __________ part in the race.", "answers": ["prevented jo from taking", "prevented her from taking", "prevented him from taking"], "correct": "prevented Jo from taking"}, {"type": "input", "q": "Mini context: Ben joined a local chess club last winter. At first he lost almost every game, but he decided to __________ practising because he enjoyed the challenge.", "answers": ["carry on"], "correct": "carry on"}];
+
+const $=id=>document.getElementById(id);
+const norm=s=>String(s??"").trim().toLowerCase().replace(/[’]/g,"'").replace(/\s+/g," ");
+
+let mode="practice", bank=PRACTICE, index=0, score=0, mistakes=[], answered=false;
+let retryMode=false;
+
+function setMode(next){
+  mode=next; bank=next==="practice"?PRACTICE:EXAM;
+  index=0;score=0;mistakes=[];answered=false;retryMode=false;
+  $("practiceTab").classList.toggle("active",next==="practice");
+  $("examTab").classList.toggle("active",next==="exam");
+  $("modeInfo").textContent=next==="practice"
+    ?"Practice Mode: hints and detailed explanations appear after each answer."
+    :"Exam Mode: 12 tasks, no hints and no correction until the end.";
+  render();
+}
+
+function isCorrect(item,a){
+  if(item.type==="mc") return Number(a)===item.answer;
+  return item.answers.some(x=>norm(x)===norm(a));
+}
+function correctText(item){
+  return item.type==="mc"
+    ? `${String.fromCharCode(65+item.answer)}. ${item.options[item.answer]}`
+    : (item.correct||item.display);
+}
+function getAnswer(item){
+  if(item.type==="mc"){
+    const r=document.querySelector('input[name="answer"]:checked');
+    return r?Number(r.value):null;
+  }
+  return $("textAnswer")?.value??"";
+}
+
+function render(){
+  if(index>=bank.length) return finish();
+  answered=false;
+  const item=bank[index];
+  $("bar").style.width=(index/bank.length*100)+"%";
+  $("progressText").textContent=`Question ${index+1} of ${bank.length}`;
+
+  let answerHtml="";
+  if(item.type==="mc"){
+    answerHtml=`<div class="options">${item.options.map((o,i)=>`
+      <label class="option"><input type="radio" name="answer" value="${i}">
+      <span>${String.fromCharCode(65+i)}. ${o}</span></label>`).join("")}</div>`;
+  } else {
+    answerHtml=`<input id="textAnswer" class="answer" autocomplete="off" placeholder="Type your answer">`;
+  }
+
+  $("quiz").innerHTML=`
+    <div class="card">
+      <div class="top"><span class="badge">${mode==="practice"?"Practice":"Exam"}</span><span class="point">1 point</span></div>
+      <div class="question">${item.q}</div>
+      ${answerHtml}
+      <div id="hintBox" class="hint hidden"></div>
+      <div id="feedbackBox" class="feedback hidden"></div>
+      <div class="actions">
+        ${mode==="practice"?'<button id="hintBtn" class="btn" type="button">Hint</button>':""}
+        <button id="checkBtn" class="btn primary" type="button">${mode==="practice"?"Check answer":"Save answer"}</button>
+        <button id="nextBtn" class="btn hidden" type="button">Next →</button>
+        <button id="restartBtn" class="btn" type="button">Restart</button>
+      </div>
+    </div>`;
+
+  if(mode==="practice"){
+    $("hintBtn").addEventListener("click",()=>{
+      $("hintBox").textContent=item.hint;
+      $("hintBox").classList.remove("hidden");
+    });
+  }
+  $("checkBtn").addEventListener("click",check);
+  $("nextBtn").addEventListener("click",()=>{index++;render();});
+  $("restartBtn").addEventListener("click",()=>setMode(mode));
+  const t=$("textAnswer"); if(t) t.focus();
+}
+
+function check(){
+  if(answered) return;
+  const item=bank[index], a=getAnswer(item);
+  if(a===null || a==="") return;
+  answered=true;
+  const good=isCorrect(item,a);
+  if(good)score++; else mistakes.push({item,a});
+
+  if(mode==="practice"){
+    const fb=$("feedbackBox");
+    fb.className="feedback "+(good?"good":"bad");
+    fb.innerHTML=good
+      ? `<b>Correct.</b><div class="detail">${item.why}
+           <div class="detail-grid">
+             <div class="mini"><b>${item.focus}</b>${item.compare}</div>
+             <div class="mini"><b>Exam trap</b>${item.trap}</div>
+           </div></div>`
+      : `<b>Not quite.</b><br><b>Correct answer:</b> ${correctText(item)}
+           <div class="detail">${item.why}
+           <div class="detail-grid">
+             <div class="mini"><b>${item.focus}</b>${item.compare}</div>
+             <div class="mini"><b>Exam trap</b>${item.trap}</div>
+           </div></div>`;
+    fb.classList.remove("hidden");
+  }
+  $("checkBtn").classList.add("hidden");
+  $("nextBtn").classList.remove("hidden");
+}
+
+function finish(){
+  $("bar").style.width="100%";
+  $("progressText").textContent="Completed";
+  const pct=Math.round(score/bank.length*100);
+  const reviews=mistakes.map((m,i)=>`
+    <div class="review">
+      <b>${i+1}.</b> ${m.item.q}<br>
+      <b>Correct:</b> ${correctText(m.item)}
+    </div>`).join("");
+
+  $("quiz").innerHTML=`
+    <div class="results">
+      <div class="eyebrow">${mode==="practice"?"Practice result":"Exam result"}</div>
+      <div class="score">${score}/${bank.length}</div>
+      <p>${pct}% correct</p>
+      ${mistakes.length?`<h3>Review mistakes</h3>${reviews}`:"<p>No mistakes in this set.</p>"}
+      <div class="actions">
+        <button id="againBtn" class="btn primary" type="button">Start again</button>
+        ${mistakes.length?'<button id="retryBtn" class="btn" type="button">Retry mistakes only</button>':""}
+      </div>
+      <div class="footer">Practice · Analyse · Retry</div>
+    </div>`;
+
+  $("againBtn").addEventListener("click",()=>setMode(mode));
+  if(mistakes.length){
+    $("retryBtn").addEventListener("click",()=>{
+      bank=mistakes.map(m=>m.item);
+      index=0;score=0;mistakes=[];answered=false;mode="practice";retryMode=true;
+      $("practiceTab").classList.add("active");$("examTab").classList.remove("active");
+      $("modeInfo").textContent="Retry Mode: only the questions you missed.";
+      render();
+    });
+  }
+}
+
+$("practiceTab").addEventListener("click",()=>setMode("practice"));
+$("examTab").addEventListener("click",()=>setMode("exam"));
+setMode("practice");
+})();
+</script>
+</body>
+</html>
